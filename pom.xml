@@ -114,9 +114,9 @@
         <version>${jacoco-version}</version>
         <executions>
           <execution>
-            <id>prepare-agent-integration</id>
+            <id>prepare-agent</id>
             <goals>
-              <goal>prepare-agent-integration</goal>
+              <goal>prepare-agent</goal>
             </goals>
             <configuration>
               <append>true</append>
