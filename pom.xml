@@ -1,0 +1,158 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>am.tycho-sonar-jacoco</groupId>
+  <artifactId>am.tycho-sonar-jacoco.parent</artifactId>
+  <version>0.0.1</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <jacoco-version>0.8.4</jacoco-version>
+    <tycho-version>1.4.0</tycho-version>
+    <sonar-version>3.6.0.1398</sonar-version>
+
+    <!-- ############### -->
+    <!-- ECLIPSE MIRRORS -->
+    <!-- ############### -->
+    <!-- ## Main (mostly down ...) : -->
+    <!-- http://download.eclipse.org -->
+    <!-- ## Full list of mirrors : -->
+    <!-- https://www.eclipse.org/downloads/download.php?format=xml -->
+    <!-- ## Usually good performing mirrors : -->
+    <!-- http://ftp.fau.de/eclipse/ -->
+    <!-- http://ftp.halifax.rwth-aachen.de/eclipse/ -->
+    <!-- http://mirror.switch.ch/eclipse/ -->
+    <eclipse.mirror>http://ftp.halifax.rwth-aachen.de/eclipse/</eclipse.mirror>
+
+    <updatesite.eclipse>${eclipse.mirror}/releases/2019-03/</updatesite.eclipse>
+    <updatesite.eclipse.updates>${eclipse.mirror}/eclipse/updates/4.11</updatesite.eclipse.updates>
+
+    <!-- ############## -->
+    <!--  SONAR CONFIG  -->
+    <!-- ############## -->
+    <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+    <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+  </properties>
+
+  <repositories>
+    <!-- add Eclipse repository to resolve dependencies -->
+    <repository>
+      <id>Eclipse</id>
+      <layout>p2</layout>
+      <url>${updatesite.eclipse}</url>
+    </repository>
+    <!-- add Eclipse updates for latest releases -->
+    <repository>
+      <id>Eclipse Updates</id>
+      <layout>p2</layout>
+      <url>${updatesite.eclipse.updates}</url>
+    </repository>
+  </repositories>
+
+  <modules>
+    <module>plugins</module>
+    <module>tests</module>
+  </modules>
+ 
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <plugins>
+      <plugin>
+        <!-- enable tycho build extension -->
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <extensions>true</extensions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-compiler-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <useProjectSettings>false</useProjectSettings>
+        </configuration>
+      </plugin>
+      <!-- Define supported target platforms -->
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <environments>
+            <!-- Linux -->
+            <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
+              <arch>x86_64</arch>
+            </environment>
+            <!-- Win 32 -->
+            <environment>
+              <os>win32</os>
+              <ws>win32</ws>
+              <arch>x86_64</arch>
+            </environment>
+            <!-- Mac -->
+            <environment>
+              <os>macosx</os>
+              <ws>cocoa</ws>
+              <arch>x86_64</arch>
+            </environment>
+          </environments>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco-version}</version>
+        <executions>
+          <execution>
+            <id>prepare-agent-integration</id>
+            <goals>
+              <goal>prepare-agent-integration</goal>
+            </goals>
+            <configuration>
+              <append>true</append>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>${sonar-version}</version>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>java8-doclint-disabled</id>
+      <activation>
+        <jdk>[1.8,)</jdk>
+      </activation>
+      <properties>
+        <javadoc.opts>-Xdoclint:none</javadoc.opts>
+      </properties>
+    </profile>
+    <!-- Specific arguments for tests on MacOSX platform -->
+    <profile>
+      <id>os-macosx</id>
+      <activation>
+        <os>
+          <family>mac</family>
+        </os>
+      </activation>
+      <properties>
+        <tycho.surefire.extra.vmargs>-XstartOnFirstThread</tycho.surefire.extra.vmargs>
+      </properties>
+    </profile>
+  </profiles>
+</project>

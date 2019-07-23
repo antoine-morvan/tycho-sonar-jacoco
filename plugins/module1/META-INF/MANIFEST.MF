@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Module 1
+Automatic-Module-Name: am.tycho-sonar-jacoco.module1
+Bundle-SymbolicName: am.tycho-sonar-jacoco.module1;singleton:=true
+Bundle-Version: 0.0.1
+Require-Bundle: javax.annotation;bundle-version="1.2.0",
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.draw2d,
+ org.eclipse.ui,
+ org.eclipse.ui.ide
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ClassPath: .
+Bundle-Vendor: AM
+Export-Package: am.tychosonarjacoco.module1
