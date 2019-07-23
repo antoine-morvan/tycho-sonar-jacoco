@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Module 1 Tests
+Automatic-Module-Name: am.tycho-sonar-jacoco.module1.tests
+Bundle-SymbolicName: am.tycho-sonar-jacoco.module1.tests
+Bundle-Version: 0.0.1
+Bundle-Vendor: AM
+Fragment-Host: am.tycho-sonar-jacoco.module1
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.junit;bundle-version="4.12.0"
+Export-Package: org.ietr.graphiti.model.test
