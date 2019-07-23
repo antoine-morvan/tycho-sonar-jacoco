@@ -1,4 +1,4 @@
-package org.ietr.graphiti.ui.test;
+package am.tychosonarjacoco.module2.tests;
 
 import org.junit.Assert;
 import org.junit.Test;
