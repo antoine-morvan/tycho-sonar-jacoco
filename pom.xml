@@ -34,7 +34,10 @@
     <!-- ############## -->
     <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
     <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-    <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml,target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+	<jacoco.destFile>../../target/jacoco.exec</jacoco.destFile>
+	<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+	<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+	<sonar.coverage.jacoco.xmlReportPaths>${project.reporting.outputDirectory}/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
   </properties>
 
   <repositories>
@@ -120,6 +123,7 @@
             </goals>
             <configuration>
               <append>true</append>
+			  <destFile>${jacoco.destFile}</destFile>
             </configuration>
           </execution>
         </executions>
